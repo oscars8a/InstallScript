@@ -15,7 +15,7 @@
 ################################################################################
 
 OE_USER="odoo"
-OE_HOME="/home/osoto"
+OE_HOME="/home/osoto/odoo"
 OE_HOME_EXT="$OE_HOME/${OE_USER}-server"
 # The default port where this Odoo instance will run under (provided you use the command -c in the terminal)
 # Set to true if you want to install it, false if you don't need it or have it already installed.
@@ -95,6 +95,8 @@ echo -e "\n---- Create ODOO system user ----"
 sudo adduser --system --quiet --shell=/bin/bash --home=$OE_HOME --gecos 'ODOO' --group $OE_USER
 #The user should also be added to the sudo'ers group.
 sudo adduser $OE_USER sudo
+sudo adduser $OE_USER osoto
+sudo chmod 773 $OE_HOME
 
 echo -e "\n---- Create Log directory ----"
 sudo mkdir $OE_HOME/log
