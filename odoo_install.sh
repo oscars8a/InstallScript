@@ -97,7 +97,7 @@ sudo adduser --system --quiet --shell=/bin/bash --home=$OE_HOME --gecos 'ODOO' -
 sudo adduser $OE_USER sudo
 sudo adduser $OE_USER osoto
 sudo mkdir $OE_HOME
-sudo chmod 773 $OE_HOME
+sudo chown $OE_USER:$OE_USER $OE_HOME
 
 echo -e "\n---- Create Log directory ----"
 sudo mkdir $OE_HOME/log
