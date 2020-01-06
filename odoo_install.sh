@@ -135,11 +135,11 @@ if [ $IS_ENTERPRISE = "True" ]; then
 fi
 
 echo -e "\n---- Create custom module directory ----"
-sudo su $OE_USER -c "mkdir $OE_HOME/custom"
-sudo su $OE_USER -c "mkdir $OE_HOME/custom/addons"
+mkdir $OE_HOME/custom
+mkdir $OE_HOME/custom/addons
 
 echo -e "\n---- Setting permissions on home folder ----"
-sudo chown -R $OE_USER:$OE_USER $OE_HOME/*
+sudo chmod -R 774 $OE_HOME 
 
 echo -e "* Create server config file"
 
