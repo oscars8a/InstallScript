@@ -58,6 +58,7 @@ sudo apt-get install postgresql postgresql-server-dev-all -y
 
 echo -e "\n---- Creating the ODOO PostgreSQL User  ----"
 sudo su - postgres -c "createuser -s $OE_USER" 2> /dev/null || true
+sudo su - postgres -c "createuser -s osoto" 2> /dev/null || true
 
 #--------------------------------------------------
 # Install Dependencies
