@@ -48,20 +48,14 @@ LONGPOLLING_PORT="8072"
 ENABLE_SSL="True"
 # Provide Email to register ssl certificate
 ADMIN_EMAIL="odoo@example.com"
-#-------------------------------------------------------------------------------
-#   WKHTMLTOPDF download links
-WKHTMLTOX_X64=https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.trusty_amd64.deb
-WKHTMLTOX_X32=https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.trusty_i386.deb
+################################################################################
+
 #--------------------------------------------------
 # Update Server
 #--------------------------------------------------
 echo -e "\n---- Update Server ----"
-# libpng12-0 dependency for wkhtmltopdf
-sudo add-apt-repository "deb http://mirrors.kernel.org/ubuntu/ xenial main"
 sudo apt-get update
 sudo apt-get upgrade -y
-
-################################################################################
 
 #--------------------------------------------------
 # Install Dependencies
@@ -69,7 +63,7 @@ sudo apt-get upgrade -y
 echo -e "\n--- Installing Python 3 + pip3 --"
 sudo apt-get install git python3 python3-pip build-essential wget python3-dev python3-venv python3-wheel libxslt-dev libzip-dev libldap2-dev libsasl2-dev python3-setuptools node-less libpng12-0 gdebi -y
 
-echo -e "\n---- Install python packages/requirements ----"
+echo -e "\n---- Install Odoo python packages/requirements ----"
 sudo -H pip3 install -r https://github.com/odoo/odoo/raw/${OE_VERSION}/requirements.txt
 
 echo -e "\n---- Installing nodeJS NPM and rtlcss for LTR support ----"
@@ -81,16 +75,8 @@ sudo npm install -g rtlcss
 #--------------------------------------------------
 if [ $INSTALL_WKHTMLTOPDF = "True" ]; then
   echo -e "\n---- Install wkhtml and place shortcuts on correct place for ODOO 13 ----"
-  #pick up correct one from x64 & x32 versions:
-  if [ "`getconf LONG_BIT`" == "64" ];then
-      _url=$WKHTMLTOX_X64
-  else
-      _url=$WKHTMLTOX_X32
-  fi
-  sudo wget $_url
-  sudo gdebi --n `basename $_url`
-  sudo ln -s /usr/local/bin/wkhtmltopdf /usr/bin
-  sudo ln -s /usr/local/bin/wkhtmltoimage /usr/bin
+  sudo apt-get update
+  sudo apt-get install wkhtmltopdf
 else
   echo "Wkhtmltopdf isn't installed due to the choice of the user!"
 fi
