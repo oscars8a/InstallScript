@@ -61,16 +61,16 @@ sudo apt-get upgrade -y
 #--------------------------------------------------
 echo -e "\n--- Installing Python 3 + pip3 --"
 sudo apt install python3-pip -y
-sudo apt install build-essential python3-dev python3-venv python3-wheel libxslt-dev libzip-dev libldap2-dev libsasl2-dev python3-setuptools node-less libpng12-0 gdebi -y
+sudo apt install build-essential python3-dev python3-venv python3-wheel -y
+sudo apt install libxslt-dev libzip-dev libldap2-dev libsasl2-dev
+sudo apt install python3-setuptools node-less gdebi -y
 
 echo -e "\n---- Install Odoo python packages/requirements ----"
 sudo -H pip3 install -r https://github.com/odoo/odoo/raw/${OE_VERSION}/requirements.txt
-# sudo apt install python3-pypdf2
-# sudo apt install python3-passlib
-# sudo apt install python3-babel -y
-# sudo apt install python3-lxml -y
-# sudo apt install python3-pillow -y
-# sudo apt install python3-ldap
+sudo apt install python3-pypdf2 python3-passlib python3-babel -y
+sudo apt install python3-werkzeug python3-lxml python3-decorator
+sudo apt install python3-polib python3-pil python3-psycopg2 python3-dateutil -y
+sudo apt install python3-psutil python3-reportlab python3-html2text python3-num2words -y
 
 echo -e "\n---- Installing nodeJS NPM and rtlcss for LTR support ----"
 sudo apt-get install nodejs npm -y
@@ -94,7 +94,7 @@ echo -e "\n---- Install PostgreSQL Server ----"
 sudo apt-get install postgresql postgresql-server-dev-all -y
 
 echo -e "\n---- Creating the ODOO PostgreSQL User  ----"
-sudo su - postgres -c "createuser -s $OE_USER" 2> /dev/null || true
+sudo su - postgres -c "createuser -s $OE_USER" 2> /dev/null || trueY
 
 #--------------------------------------------------
 # Create ODOO system user
