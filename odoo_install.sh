@@ -70,7 +70,8 @@ sudo -H pip3 install -r https://github.com/odoo/odoo/raw/${OE_VERSION}/requireme
 sudo apt install python3-pypdf2 python3-passlib python3-babel -y
 sudo apt install python3-werkzeug python3-lxml python3-decorator
 sudo apt install python3-polib python3-pil python3-psycopg2 python3-dateutil -y
-sudo apt install python3-psutil python3-reportlab python3-html2text python3-num2words -y
+sudo apt install python3-psutil python3-reportlab python3-html2text -y
+sudo apt install python3-libsass python3-num2words -y
 
 echo -e "\n---- Installing nodeJS NPM and rtlcss for LTR support ----"
 sudo apt-get install nodejs npm -y
