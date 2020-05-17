@@ -2,7 +2,6 @@
 ################################################################################
 # Raspberry Pi 4 arm64
 # Script for installing Odoo on Ubuntu 20.04
-# Author: Oscar Soto Ochoa
 # Copyright (c) 2020 Oscar Soto Ochoa
 #-------------------------------------------------------------------------------
 # This script will install Odoo on your Ubuntu 20.04 server.
@@ -62,10 +61,16 @@ sudo apt-get upgrade -y
 #--------------------------------------------------
 echo -e "\n--- Installing Python 3 + pip3 --"
 sudo apt install python3-pip -y
-sudo apt-get install build-essential python3-dev python3-venv python3-wheel libxslt-dev libzip-dev libldap2-dev libsasl2-dev python3-setuptools node-less libpng12-0 gdebi -y
+sudo apt install build-essential python3-dev python3-venv python3-wheel libxslt-dev libzip-dev libldap2-dev libsasl2-dev python3-setuptools node-less libpng12-0 gdebi -y
 
 echo -e "\n---- Install Odoo python packages/requirements ----"
 sudo -H pip3 install -r https://github.com/odoo/odoo/raw/${OE_VERSION}/requirements.txt
+# sudo apt install python3-pypdf2
+# sudo apt install python3-passlib
+# sudo apt install python3-babel -y
+# sudo apt install python3-lxml -y
+# sudo apt install python3-pillow -y
+# sudo apt install python3-ldap
 
 echo -e "\n---- Installing nodeJS NPM and rtlcss for LTR support ----"
 sudo apt-get install nodejs npm -y
