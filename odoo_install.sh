@@ -60,18 +60,18 @@ sudo apt-get upgrade -y
 # Install Dependencies
 #--------------------------------------------------
 echo -e "\n--- Installing Python 3 + pip3 --"
-sudo apt install python3-pip -y
-sudo apt install build-essential python3-dev python3-venv python3-wheel -y
-sudo apt install libxslt-dev libzip-dev libldap2-dev libsasl2-dev
-sudo apt install python3-setuptools node-less gdebi -y
+sudo apt install git python3 python3-pip build-essential wget python3-dev -y
+sudo apt install python3-venv python3-wheel libxslt-dev libzip-dev -y
+sudo apt install libldap2-dev libsasl2-dev python3-setuptools node-less -y
+sudo apt install libpng12-0 libjpeg-dev gdebi -y
 
 echo -e "\n---- Install Odoo python packages/requirements ----"
-sudo -H pip3 install -r https://github.com/odoo/odoo/raw/${OE_VERSION}/requirements.txt
-sudo apt install python3-pypdf2 python3-passlib python3-babel -y
-sudo apt install python3-werkzeug python3-lxml python3-decorator
-sudo apt install python3-polib python3-pil python3-psycopg2 python3-dateutil -y
-sudo apt install python3-psutil python3-reportlab python3-html2text -y
-sudo apt install python3-libsass python3-num2words -y
+sudo -H pip3 install -Ivr https://github.com/odoo/odoo/raw/${OE_VERSION}/requirements.txt
+# sudo apt install python3-pypdf2 python3-passlib python3-babel -y
+# sudo apt install python3-werkzeug python3-lxml python3-decorator
+# sudo apt install python3-polib python3-pil python3-psycopg2 python3-dateutil -y
+# sudo apt install python3-psutil python3-reportlab python3-html2text -y
+# sudo apt install python3-libsass python3-num2words -y
 
 echo -e "\n---- Installing nodeJS NPM and rtlcss for LTR support ----"
 sudo apt-get install nodejs npm -y
@@ -88,97 +88,97 @@ else
   echo "Wkhtmltopdf isn't installed due to the choice of the user!"
 fi
 
-#--------------------------------------------------
-# Install PostgreSQL Server
-#--------------------------------------------------
-echo -e "\n---- Install PostgreSQL Server ----"
-sudo apt-get install postgresql postgresql-server-dev-all -y
+# #--------------------------------------------------
+# # Install PostgreSQL Server
+# #--------------------------------------------------
+# echo -e "\n---- Install PostgreSQL Server ----"
+# sudo apt-get install postgresql postgresql-server-dev-all -y
 
-echo -e "\n---- Creating the ODOO PostgreSQL User  ----"
-sudo su - postgres -c "createuser -s $OE_USER" 2> /dev/null || trueY
+# echo -e "\n---- Creating the ODOO PostgreSQL User  ----"
+# sudo su - postgres -c "createuser -s $OE_USER" 2> /dev/null || trueY
 
-#--------------------------------------------------
-# Create ODOO system user
-#--------------------------------------------------
-echo -e "\n---- Create ODOO system user ----"
-sudo adduser --system --quiet --shell=/bin/bash --home=$OE_HOME --gecos 'ODOO' --group $OE_USER
-#The user should also be added to the sudo'ers group.
-sudo adduser $OE_USER sudo
+# #--------------------------------------------------
+# # Create ODOO system user
+# #--------------------------------------------------
+# echo -e "\n---- Create ODOO system user ----"
+# sudo adduser --system --quiet --shell=/bin/bash --home=$OE_HOME --gecos 'ODOO' --group $OE_USER
+# #The user should also be added to the sudo'ers group.
+# sudo adduser $OE_USER sudo
 
-#--------------------------------------------------
-# Create LOG Directory
-#--------------------------------------------------
-echo -e "\n---- Create Log directory ----"
-sudo mkdir /var/log/$OE_USER
-sudo chown $OE_USER:$OE_USER /var/log/$OE_USER
+# #--------------------------------------------------
+# # Create LOG Directory
+# #--------------------------------------------------
+# echo -e "\n---- Create Log directory ----"
+# sudo mkdir /var/log/$OE_USER
+# sudo chown $OE_USER:$OE_USER /var/log/$OE_USER
 
-#--------------------------------------------------
-# Install ODOO
-#--------------------------------------------------
-echo -e "\n==== Installing ODOO Server ===="
-sudo git clone --depth 1 --branch $OE_VERSION https://www.github.com/odoo/odoo $OE_HOME_EXT/
+# #--------------------------------------------------
+# # Install ODOO
+# #--------------------------------------------------
+# echo -e "\n==== Installing ODOO Server ===="
+# sudo git clone --depth 1 --branch $OE_VERSION https://www.github.com/odoo/odoo $OE_HOME_EXT/
+
+# # if [ $IS_ENTERPRISE = "True" ]; then
+# #     # Odoo Enterprise install!
+# #     echo -e "\n--- Create symlink for node"
+# #     sudo ln -s /usr/bin/nodejs /usr/bin/node
+# #     sudo su $OE_USER -c "mkdir $OE_HOME/enterprise"
+# #     sudo su $OE_USER -c "mkdir $OE_HOME/enterprise/addons"
+
+# #     GITHUB_RESPONSE=$(sudo git clone --depth 1 --branch $OE_VERSION https://www.github.com/odoo/enterprise "$OE_HOME/enterprise/addons" 2>&1)
+# #     while [[ $GITHUB_RESPONSE == *"Authentication"* ]]; do
+# #         echo "------------------------WARNING------------------------------"
+# #         echo "Your authentication with Github has failed! Please try again."
+# #         printf "In order to clone and install the Odoo enterprise version you \nneed to be an offical Odoo partner and you need access to\nhttp://github.com/odoo/enterprise.\n"
+# #         echo "TIP: Press ctrl+c to stop this script."
+# #         echo "-------------------------------------------------------------"
+# #         echo " "
+# #         GITHUB_RESPONSE=$(sudo git clone --depth 1 --branch $OE_VERSION https://www.github.com/odoo/enterprise "$OE_HOME/enterprise/addons" 2>&1)
+# #     done
+
+# #     echo -e "\n---- Added Enterprise code under $OE_HOME/enterprise/addons ----"
+# #     echo -e "\n---- Installing Enterprise specific libraries ----"
+# #     sudo -H pip3 install num2words ofxparse dbfread ebaysdk firebase_admin pyOpenSSL
+# #     sudo npm install -g less
+# #     sudo npm install -g less-plugin-clean-css
+# # fi
+
+# echo -e "\n---- Create custom module directory ----"
+# sudo su $OE_USER -c "mkdir $OE_HOME/custom"
+# sudo su $OE_USER -c "mkdir $OE_HOME/custom/addons"
+
+# echo -e "\n---- Setting permissions on home folder ----"
+# sudo chown -R $OE_USER:$OE_USER $OE_HOME/*
+
+# echo -e "* Create server config file"
+# sudo touch /etc/${OE_CONFIG}.conf
+
+# echo -e "* Creating server config file"
+# sudo su root -c "printf '[options] \n; This is the password that allows database operations:\n' >> /etc/${OE_CONFIG}.conf"
+# if [ $GENERATE_RANDOM_PASSWORD = "True" ]; then
+#     echo -e "* Generating random admin password"
+#     OE_SUPERADMIN=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1)
+# fi
+# sudo su root -c "printf 'admin_passwd = ${OE_SUPERADMIN}\n' >> /etc/${OE_CONFIG}.conf"
+# if [ $OE_VERSION > "11.0" ];then
+#     sudo su root -c "printf 'http_port = ${OE_PORT}\n' >> /etc/${OE_CONFIG}.conf"
+# else
+#     sudo su root -c "printf 'xmlrpc_port = ${OE_PORT}\n' >> /etc/${OE_CONFIG}.conf"
+# fi
+# sudo su root -c "printf 'logfile = /var/log/${OE_USER}/${OE_CONFIG}.log\n' >> /etc/${OE_CONFIG}.conf"
 
 # if [ $IS_ENTERPRISE = "True" ]; then
-#     # Odoo Enterprise install!
-#     echo -e "\n--- Create symlink for node"
-#     sudo ln -s /usr/bin/nodejs /usr/bin/node
-#     sudo su $OE_USER -c "mkdir $OE_HOME/enterprise"
-#     sudo su $OE_USER -c "mkdir $OE_HOME/enterprise/addons"
-
-#     GITHUB_RESPONSE=$(sudo git clone --depth 1 --branch $OE_VERSION https://www.github.com/odoo/enterprise "$OE_HOME/enterprise/addons" 2>&1)
-#     while [[ $GITHUB_RESPONSE == *"Authentication"* ]]; do
-#         echo "------------------------WARNING------------------------------"
-#         echo "Your authentication with Github has failed! Please try again."
-#         printf "In order to clone and install the Odoo enterprise version you \nneed to be an offical Odoo partner and you need access to\nhttp://github.com/odoo/enterprise.\n"
-#         echo "TIP: Press ctrl+c to stop this script."
-#         echo "-------------------------------------------------------------"
-#         echo " "
-#         GITHUB_RESPONSE=$(sudo git clone --depth 1 --branch $OE_VERSION https://www.github.com/odoo/enterprise "$OE_HOME/enterprise/addons" 2>&1)
-#     done
-
-#     echo -e "\n---- Added Enterprise code under $OE_HOME/enterprise/addons ----"
-#     echo -e "\n---- Installing Enterprise specific libraries ----"
-#     sudo -H pip3 install num2words ofxparse dbfread ebaysdk firebase_admin pyOpenSSL
-#     sudo npm install -g less
-#     sudo npm install -g less-plugin-clean-css
+#     sudo su root -c "printf 'addons_path=${OE_HOME}/enterprise/addons,${OE_HOME_EXT}/addons\n' >> /etc/${OE_CONFIG}.conf"
+# else
+#     sudo su root -c "printf 'addons_path=${OE_HOME_EXT}/addons,${OE_HOME}/custom/addons\n' >> /etc/${OE_CONFIG}.conf"
 # fi
+# sudo chown $OE_USER:$OE_USER /etc/${OE_CONFIG}.conf
+# sudo chmod 640 /etc/${OE_CONFIG}.conf
 
-echo -e "\n---- Create custom module directory ----"
-sudo su $OE_USER -c "mkdir $OE_HOME/custom"
-sudo su $OE_USER -c "mkdir $OE_HOME/custom/addons"
-
-echo -e "\n---- Setting permissions on home folder ----"
-sudo chown -R $OE_USER:$OE_USER $OE_HOME/*
-
-echo -e "* Create server config file"
-sudo touch /etc/${OE_CONFIG}.conf
-
-echo -e "* Creating server config file"
-sudo su root -c "printf '[options] \n; This is the password that allows database operations:\n' >> /etc/${OE_CONFIG}.conf"
-if [ $GENERATE_RANDOM_PASSWORD = "True" ]; then
-    echo -e "* Generating random admin password"
-    OE_SUPERADMIN=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1)
-fi
-sudo su root -c "printf 'admin_passwd = ${OE_SUPERADMIN}\n' >> /etc/${OE_CONFIG}.conf"
-if [ $OE_VERSION > "11.0" ];then
-    sudo su root -c "printf 'http_port = ${OE_PORT}\n' >> /etc/${OE_CONFIG}.conf"
-else
-    sudo su root -c "printf 'xmlrpc_port = ${OE_PORT}\n' >> /etc/${OE_CONFIG}.conf"
-fi
-sudo su root -c "printf 'logfile = /var/log/${OE_USER}/${OE_CONFIG}.log\n' >> /etc/${OE_CONFIG}.conf"
-
-if [ $IS_ENTERPRISE = "True" ]; then
-    sudo su root -c "printf 'addons_path=${OE_HOME}/enterprise/addons,${OE_HOME_EXT}/addons\n' >> /etc/${OE_CONFIG}.conf"
-else
-    sudo su root -c "printf 'addons_path=${OE_HOME_EXT}/addons,${OE_HOME}/custom/addons\n' >> /etc/${OE_CONFIG}.conf"
-fi
-sudo chown $OE_USER:$OE_USER /etc/${OE_CONFIG}.conf
-sudo chmod 640 /etc/${OE_CONFIG}.conf
-
-echo -e "* Create startup file"
-sudo su root -c "echo '#!/bin/sh' >> $OE_HOME_EXT/start.sh"
-sudo su root -c "echo 'sudo -u $OE_USER $OE_HOME_EXT/odoo-bin --config=/etc/${OE_CONFIG}.conf' >> $OE_HOME_EXT/start.sh"
-sudo chmod 755 $OE_HOME_EXT/start.sh
+# echo -e "* Create startup file"
+# sudo su root -c "echo '#!/bin/sh' >> $OE_HOME_EXT/start.sh"
+# sudo su root -c "echo 'sudo -u $OE_USER $OE_HOME_EXT/odoo-bin --config=/etc/${OE_CONFIG}.conf' >> $OE_HOME_EXT/start.sh"
+# sudo chmod 755 $OE_HOME_EXT/start.sh
 
 # #--------------------------------------------------
 # # Adding ODOO as a deamon (initscript)
