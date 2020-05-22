@@ -30,6 +30,11 @@ INSTALL_WKHTMLTOPDF="True"
 #-------------------------------------------------------------------------------
 # Set this to True if you want to install the Odoo enterprise version!
 IS_ENTERPRISE="False"
+################################################################################
+
+################################################################################
+#-------------------------------------------------------------------------------
+# Nginx Optiones
 #-------------------------------------------------------------------------------
 # Set this to True if you want to install Nginx!
 INSTALL_NGINX="False"
@@ -67,13 +72,8 @@ sudo apt install libpng12-0 libjpeg-dev gdebi -y
 
 echo -e "\n---- Install Odoo python packages/requirements ----"
 sudo -H pip3 install -Ivr https://github.com/odoo/odoo/raw/${OE_VERSION}/requirements.txt
-# sudo apt install python3-pypdf2 python3-passlib python3-babel -y
-# sudo apt install python3-werkzeug python3-lxml python3-decorator
-# sudo apt install python3-polib python3-pil python3-psycopg2 python3-dateutil -y
-# sudo apt install python3-psutil python3-reportlab python3-html2text -y
-# sudo apt install python3-libsass python3-num2words -y
 
-echo -e "\n---- Installing nodeJS NPM and rtlcss for LTR support ----"
+echo -e "\n---- Installing nodeJS NPM and rtlcss for RTL support ----"
 sudo apt-get install nodejs npm -y
 sudo npm install -g rtlcss
 
