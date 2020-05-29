@@ -1,0 +1,4 @@
+https://github.com/OCA/OCB.git
+https://github.com/OCA/web.git
+https://github.com/OCA/server-tools.git
+https://github.com/OCA/server-ux.git
