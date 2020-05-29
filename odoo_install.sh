@@ -1,7 +1,7 @@
 #!/bin/bash
 ################################################################################
-# Raspberry Pi 4 arm64
-# Script for installing Odoo on Ubuntu 20.04
+# version 1.1.0.0
+# Script for installing Odoo on Ubuntu 20.04 on a Raspberry Pi 4
 # Copyright (c) 2020 Oscar Soto Ochoa
 #-------------------------------------------------------------------------------
 # This script will install Odoo on your Ubuntu 20.04 server.
