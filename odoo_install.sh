@@ -158,13 +158,14 @@ sudo chown -R $OE_USER:$OE_USER $OE_HOME/*
 ### Git clone Repositories
 #--------------------------------------------------
 echo -e "\n---- Git clone Repositories ----"
-cd $OE_HOME/custom
-input="./repos.txt"
+input="repos.txt"
 while IFS= read -r line
 do
-  sudo su $OE_USER -c "git clone -b $OE_VERSION $line"
-done < "$input"
-cd ~  # I execute .sh since ~ pront
+  echo -e $line
+  full_name=${line##*/}
+  dir_name=${full_name%.*}
+  sudo su $OE_USER -c "git clone -b $OE_VERSION $line $OE_HOME/custom/$dir_name"
+done < $input
 
 # #--------------------------------------------------
 # ### Create server config file
