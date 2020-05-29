@@ -155,13 +155,16 @@ echo -e "\n---- Setting permissions on home folder ----"
 sudo chown -R $OE_USER:$OE_USER $OE_HOME/*
 
 #--------------------------------------------------
-### Download Repositories
+### Git clone Repositories
 #--------------------------------------------------
+echo -e "\n---- Git clone Repositories ----"
+cd $OE_HOME/custom
 input="./repos.txt"
 while IFS= read -r line
 do
-  sudo su $OE_USER -c "git clone -b $OE_VERSION $line $OE_HOME/custom"
+  sudo su $OE_USER -c "git clone -b $OE_VERSION $line"
 done < "$input"
+cd ~  # I execute .sh since ~ pront
 
 # #--------------------------------------------------
 # ### Create server config file
